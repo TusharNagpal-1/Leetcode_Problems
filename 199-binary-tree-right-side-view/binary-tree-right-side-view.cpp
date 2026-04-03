@@ -5,27 +5,17 @@ public:
             return 0;
         return 1 + max(level(root->left), level(root->right));
     }
-    void nthlevel(TreeNode* root, int level, int curr, vector<int>& ans) {
-        if (root == NULL)
-            return;
-        if (curr == level) {
-            ans[curr] = root->val;
-            return;
-        }
-        nthlevel(root->left, level, curr + 1, ans);
-        nthlevel(root->right, level, curr + 1, ans);
-    }
-    void olevel(TreeNode* root, vector<int>& ans) {
-        int n = ans.size();
-        for (int i = 0; i < n; i++) {
-            nthlevel(root, i, 0, ans);
-        }
+    void preorder(TreeNode* root, vector<int>& ans, int level) {
+        if (root == NULL) return;
+        ans[level] = root->val;
+        preorder(root->left, ans,level+1);
+        preorder(root->right,ans, level+1);
     }
 
     vector<int> rightSideView(TreeNode* root) {
         int n = level(root);
         vector<int> ans(n, 0);
-        olevel(root, ans);
+        preorder(root, ans, 0);
         return ans;
     }
 };
