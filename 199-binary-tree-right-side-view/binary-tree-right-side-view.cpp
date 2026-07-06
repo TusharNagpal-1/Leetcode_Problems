@@ -1,21 +1,14 @@
 class Solution {
 public:
-    int level(TreeNode* root) {
-        if (root == NULL)
-            return 0;
-        return 1 + max(level(root->left), level(root->right));
+    void helper(TreeNode* root,int c,vector<int>& v){
+        if(root==nullptr) return;
+        if(c==v.size()) v.push_back(root->val);
+        helper(root->right,c+1,v);
+        helper(root->left,c+1,v);
     }
-    void preorder(TreeNode* root, vector<int>& ans, int level) {
-        if (root == NULL) return;
-        ans[level] = root->val;
-        preorder(root->left, ans,level+1);
-        preorder(root->right,ans, level+1);
-    }
-
     vector<int> rightSideView(TreeNode* root) {
-        int n = level(root);
-        vector<int> ans(n, 0);
-        preorder(root, ans, 0);
-        return ans;
+        vector<int> v;
+        helper(root,0,v);
+        return v;
     }
 };
