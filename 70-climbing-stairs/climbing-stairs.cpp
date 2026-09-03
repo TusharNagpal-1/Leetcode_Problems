@@ -1,12 +1,13 @@
 class Solution {
 public:
-    int climb(int n,vector<int> &v){
-        if(n==1 || n==2) return n;
-        if(v[n]!=-1) return v[n];
-        return v[n]=climb(n-1,v)+climb(n-2,v);
-    }
     int climbStairs(int n) {
-        vector<int> v(n+1,-1);
-        return climb(n,v);
+        int prev=1,prev2=2,next=0;
+        if(n==1 || n==2) return n;
+        for(int i=3;i<=n;i++){
+            next=prev+prev2;
+            prev=prev2;
+            prev2=next;
+        }
+        return next;
     }
 };
